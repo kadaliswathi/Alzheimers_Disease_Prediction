@@ -1,0 +1,130 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+
+{% block contents %}
+
+<style>
+    body {
+        background: linear-gradient(45deg, #ff7f50, #1e90ff, #32cd32);
+    }
+
+    .form-box {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .btn-custom {
+        background-color: #28a745;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 12px;
+        transition: 0.3s;
+    }
+
+    .btn-custom:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    .preview-img {
+        max-width: 220px;
+        margin-top: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .result-box {
+        background: #f8f9fa;
+        border-left: 5px solid #28a745;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .confidence-bar {
+        height: 20px;
+        border-radius: 10px;
+        background: #ddd;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+
+    .confidence-fill {
+        height: 100%;
+        background: #28a745;
+        text-align: center;
+        color: white;
+        font-size: 12px;
+    }
+</style>
+
+<div class="container">
+    <div class="form-box">
+
+        <h3 class="text-center mb-4">🧠 Alzheimer's Prediction System</h3>
+
+        <!-- RESULT -->
+        {% if prediction %}
+        <div class="result-box">
+            <h4>Prediction: {{ prediction }}</h4>
+            <h5>Confidence: {{ confidence }}%</h5>
+
+            <!-- Confidence bar -->
+            <div class="confidence-bar">
+                <div class="confidence-fill" style="width: {{ confidence }}%">
+                    {{ confidence }}%
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- FORM -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label><strong>Upload MRI Brain Scan</strong></label>
+                <input type="file"
+                       class="form-control"
+                       name="mri_image"
+                       accept="image/*"
+                       onchange="previewImage(this)"
+                       required>
+                <small class="text-muted">JPG, PNG (224×224 recommended)</small>
+            </div>
+
+            <!-- Preview -->
+            <div class="text-center">
+                <img id="imgPreview" class="preview-img"/>
+            </div>
+
+            <button type="submit" class="btn btn-custom btn-block mt-3">
+                🔍 Predict
+            </button>
+        </form>
+
+    </div>
+</div>
+
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('imgPreview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+{% endblock %}

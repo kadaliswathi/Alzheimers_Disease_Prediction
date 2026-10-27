@@ -1,0 +1,44 @@
+{
+    "train_acc": 79.42,
+    "test_acc": 88.49,
+    "accuracy": 88.49,
+    "val_loss": 0.2932,
+
+    "acc_plot": "acc.png",
+    "loss_plot": "loss.png",
+    "cm_plot": "cm.png",
+    "f1_plot": "f1.png",
+
+    "per_class": [
+        {
+            "name": "MildDemented",
+            "precision": 88,
+            "recall": 96,
+            "f1": 92,
+            "support": 1792
+        },
+        {
+            "name": "ModerateDemented",
+            "precision": 99,
+            "recall": 100,
+            "f1": 100,
+            "support": 1292
+        },
+        {
+            "name": "NonDemented",
+            "precision": 85,
+            "recall": 84,
+            "f1": 84,
+            "support": 1920
+        },
+        {
+            "name": "VeryMildDemented",
+            "precision": 85,
+            "recall": 77,
+            "f1": 81,
+            "support": 1792
+        }
+    ],
+
+    "report_text": "Accuracy: 88.49%\n\nMildDemented -> Precision: 88%, Recall: 96%, F1: 92%\nModerateDemented -> Precision: 99%, Recall: 100%, F1: 100%\nNonDemented -> Precision: 85%, Recall: 84%, F1: 84%\nVeryMildDemented -> Precision: 85%, Recall: 77%, F1: 81%"
+}

@@ -1,0 +1,143 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">🧠 Model Training Dashboard</h2>
+
+    <!-- OPTIONAL BUTTON (can remove if not needed) -->
+    <!--
+    <div class="text-center mb-4">
+        <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-success btn-lg">🚀 Load Results</button>
+        </form>
+    </div>
+    -->
+
+    <!-- ERROR -->
+    {% if error %}
+    <div class="alert alert-danger text-center">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- RESULTS -->
+    {% if trained %}
+
+    <!-- ACCURACY CARDS -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Train Accuracy</h5>
+                <h3 class="text-primary">{{ train_acc|default:"0" }}%</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Test Accuracy</h5>
+                <h3 class="text-success">{{ test_acc|default:"0" }}%</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Overall Accuracy</h5>
+                <h3 class="text-danger">{{ accuracy|default:"0" }}%</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOSS -->
+    <div class="text-center mb-4">
+        <h5>
+            Validation Loss:
+            <span class="text-danger">{{ val_loss|default:"N/A" }}</span>
+        </h5>
+    </div>
+
+    <!-- GRAPHS -->
+    <div class="row">
+
+        {% if acc_plot %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow p-3">
+                <h5 class="text-center">Accuracy Graph</h5>
+                <img src="/media/{{ acc_plot }}" class="img-fluid">
+            </div>
+        </div>
+        {% endif %}
+
+        {% if loss_plot %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow p-3">
+                <h5 class="text-center">Loss Graph</h5>
+                <img src="/media/{{ loss_plot }}" class="img-fluid">
+            </div>
+        </div>
+        {% endif %}
+
+        {% if cm_plot %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow p-3">
+                <h5 class="text-center">Confusion Matrix</h5>
+                <img src="/media/{{ cm_plot }}" class="img-fluid">
+            </div>
+        </div>
+        {% endif %}
+
+        {% if f1_plot %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow p-3">
+                <h5 class="text-center">F1 Score</h5>
+                <img src="/media/{{ f1_plot }}" class="img-fluid">
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- PER CLASS TABLE -->
+    {% if per_class %}
+    <div class="card shadow p-3 mb-4">
+        <h4 class="text-center mb-3">📊 Per-Class Metrics</h4>
+
+        <table class="table table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Class</th>
+                    <th>Precision (%)</th>
+                    <th>Recall (%)</th>
+                    <th>F1 Score (%)</th>
+                    <th>Support</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in per_class %}
+                <tr>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.precision }}</td>
+                    <td>{{ row.recall }}</td>
+                    <td>{{ row.f1 }}</td>
+                    <td>{{ row.support }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- CLASSIFICATION REPORT -->
+    {% if report_text %}
+    <div class="card shadow p-3 mb-4">
+        <h4 class="text-center mb-3">📄 Classification Report</h4>
+        <pre style="background:#000;color:#0f0;padding:15px;border-radius:8px;">
+{{ report_text }}
+        </pre>
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+</div>
+{% endblock %}
