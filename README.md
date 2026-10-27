@@ -1,4 +1,4 @@
-﻿# Alzheimer's Disease Prediction using Modern Machine Learning Techniques
+﻿# Alzheimer's Disease Prediction using MRI Brain Images (Deep Learning)
 
 An end-to-end intelligent healthcare web application built with **Django** and **Deep Learning (EfficientNet-B0)** to detect and classify Alzheimer's Disease stages from brain MRI scans.
 
