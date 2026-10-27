@@ -38,6 +38,9 @@ This project implements a web-based diagnosis assistance system where medical pr
   - Preprocessed with standard EfficientNet input scaling (224x224).
   - Model weights and architecture stored in media/best_alzheimer_efficientnetb0.keras and media/model.weights.h5.
 
+- **Ready-to-Test Sample Scans**:
+  - Includes sample MRI brain scans inside sample_test_mri_images/ covering all 4 disease stages for immediate testing and demonstration.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -71,6 +74,11 @@ Alzheimers_Disease_Prediction/
 │   ├── acc.png, cm.png, f1.png, loss.png  # Performance evaluation charts
 │   ├── alzheimers_prediction_dataset.csv
 │   └── balanced_data.csv
+├── sample_test_mri_images/          # Sample MRI brain scans for quick testing
+│   ├── MildDemented/                # Sample Mild Demented scans
+│   ├── ModerateDemented/            # Sample Moderate Demented scans
+│   ├── NonDemented/                 # Sample Non-Demented (Healthy) scans
+│   └── VeryMildDemented/            # Sample Very Mild Demented scans
 ├── manage.py                        # Django management command-line utility
 ├── .gitignore                       # Git exclusion rules
 └── README.md                        # Documentation
@@ -126,6 +134,20 @@ Open your browser and navigate to:
 `
 http://127.0.0.1:8000/
 `
+
+---
+
+## 🧪 Testing Predictions with Sample Scans
+
+To test the application:
+1. Log in to the User Portal.
+2. Navigate to the **Prediction** page (/prediction/).
+3. Click **Choose File** and select any sample MRI brain scan from the sample_test_mri_images/ directory:
+   - sample_test_mri_images/MildDemented/
+   - sample_test_mri_images/ModerateDemented/
+   - sample_test_mri_images/NonDemented/
+   - sample_test_mri_images/VeryMildDemented/
+4. Click **Predict**. The system will validate the scan and display the diagnosed stage with confidence percentage.
 
 ---
 
